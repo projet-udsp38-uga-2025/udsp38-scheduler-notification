@@ -1,0 +1,12 @@
+services:
+  scheduler-app:
+    image: projetudsp38/udsp38-scheduler:latest
+    container_name: udsp38-scheduler-container
+    ports:
+      - "3008:3005"
+    env_file:
+      - .env
+    # Cette option permet au conteneur de communiquer avec l'hôte via 'host.docker.internal'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always

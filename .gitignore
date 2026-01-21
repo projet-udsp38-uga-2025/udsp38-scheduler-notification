@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# environment variables
+.env
+
+# Ignorer tout le dossier .vscode par défaut...
+.vscode/*
+
+# ...Sauf les fichiers de configuration partagés
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Ignorer les fichiers temporaires de VS Code
+.vscode/*.log

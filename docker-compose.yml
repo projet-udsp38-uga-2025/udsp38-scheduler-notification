@@ -1,0 +1,9 @@
+services:
+  scheduler-app:
+    image: udsp38-scheduler:latest
+    container_name: udsp38-scheduler-container
+    ports:
+      - "3005:3005"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
