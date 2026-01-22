@@ -1,0 +1,16 @@
+name: Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy-develop:
+    uses: ./.github/workflows/common.yml
+    with:
+      docker_tag: 'latest'
+      environnement: 'prod'
+      nextjs_base_url: 'NEXTJS_BASE_URL_PROD'
+    secrets: inherit

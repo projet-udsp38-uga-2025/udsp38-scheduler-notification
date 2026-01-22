@@ -3,11 +3,9 @@ FROM ghcr.io/astral-sh/uv:python3.13-alpine
 WORKDIR /app
 
 ARG DATABASE_URL
-ARG TIMEZONE
 ARG NEXTJS_BASE_URL
 
 ENV DATABASE_URL=$DATABASE_URL
-ENV TIMEZONE=$TIMEZONE
 ENV NEXTJS_BASE_URL=$NEXTJS_BASE_URL
 
 # Empêcher Python de générer des fichiers .pyc et forcer l'affichage des logs
