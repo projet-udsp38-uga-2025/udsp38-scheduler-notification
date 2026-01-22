@@ -1,6 +1,6 @@
 services:
   scheduler-app:
-    image: projetudsp38/udsp38-scheduler:test
+    image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
     ports:
       - "3008:3005"
