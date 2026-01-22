@@ -21,9 +21,7 @@ def publier(article_id: int):
 async def programmer_publication(
     payload: ProgrammerPublicationRequestDTO,
 ) -> JobProgrammationDTO:
-    trigger = DateTrigger(
-        run_date=payload.date_programmation, timezone=settings.TIMEZONE
-    )
+    trigger = DateTrigger(run_date=payload.date_programmation, timezone="Europe/Paris")
 
     job: Job = scheduler.add_job(
         func=publier,
