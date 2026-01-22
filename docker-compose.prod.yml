@@ -1,6 +1,6 @@
 services:
   scheduler-app:
-    image: projetudsp38/udsp38-scheduler:latest
+    image: projetudsp38/udsp38-scheduler-microservice:latest
     container_name: udsp38-scheduler-ms-latest
     ports:
       - "3005:3005"

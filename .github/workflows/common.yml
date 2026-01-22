@@ -58,3 +58,32 @@ jobs:
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             NEXTJS_BASE_URL=${{ secrets[inputs.nextjs_base_url] }}
+
+
+  deploy:
+    needs: build-docker
+    runs-on: ubuntu-latest
+    steps:
+      -  uses: actions/checkout@v4
+
+      - name: Copy Docker Compose to VM
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
+          source: "docker-compose.${{inputs.environnement}}.yml"
+          target: "/home/${{ secrets.SSH_USER }}/app/udsp38-scheduler/"
+          strip_components: 0
+
+
+      - name: Deploy to VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
+          script: |
+            cd /home/${{ secrets.SSH_USER }}/app/udsp38-scheduler
+            docker compose -f docker-compose.${{inputs.environnement}}.yml up -d
+            docker image prune -f
