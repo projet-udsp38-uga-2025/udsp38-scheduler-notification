@@ -4,9 +4,9 @@ from app.dtos.requests.programmer_publication_dto import ProgrammerPublicationRe
 from app.dtos.responses.job_programmation_dto import JobProgrammationDTO
 from app.services.jobs_service import programmer_publication
 
-router = APIRouter(prefix="/jobs", tags=["jobs"])
+jobs_router = APIRouter(prefix="/jobs", tags=["jobs"])
 
 
-@router.post("/programmer-publication", response_model=JobProgrammationDTO)
+@jobs_router.post("/programmer-publication", response_model=JobProgrammationDTO)
 async def programmer(payload: ProgrammerPublicationRequestDTO):
     return programmer_publication(payload)
