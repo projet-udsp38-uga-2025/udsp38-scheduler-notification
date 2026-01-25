@@ -9,4 +9,4 @@ router = APIRouter(prefix="/jobs", tags=["jobs"])
 
 @router.post("/programmer-publication", response_model=JobProgrammationDTO)
 async def programmer(payload: ProgrammerPublicationRequestDTO):
-    return await programmer_publication(payload)
+    return programmer_publication(payload)
