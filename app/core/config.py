@@ -9,3 +9,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+TIMEZONE: str = "Europe/Paris"
