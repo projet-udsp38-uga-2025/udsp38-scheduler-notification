@@ -6,8 +6,8 @@ from pydantic.alias_generators import to_camel
 
 
 class TypePublication(Enum):
-    ACTUALITE = "actualite"
-    EVENEMENT = "evenement"
+    ACTUALITE = "Actualité"
+    EVENEMENT = "Événement"
 
 
 class ProgrammerPublicationRequestDTO(BaseModel):

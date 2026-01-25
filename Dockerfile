@@ -35,7 +35,7 @@ COPY . .
 # Placer le dossier .venv/bin en priorité dans le PATH
 ENV PATH="/app/.venv/bin:$PATH"
 
-EXPOSE 3005
+EXPOSE 8000
 
 # Commande de lancement (à adapter selon votre point d'entrée)
-CMD ["fastapi", "run", "main.py", "--port", "3005", "--proxy-headers"]
+CMD ["fastapi", "run", "main.py", "--port", "8000", "--proxy-headers"]

@@ -23,3 +23,6 @@ wheels/
 
 # Ignorer les fichiers temporaires de VS Code
 .vscode/*.log
+
+firebase-adminsdk.json
+.cache
