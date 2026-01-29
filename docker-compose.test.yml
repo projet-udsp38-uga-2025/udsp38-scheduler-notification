@@ -3,10 +3,6 @@ services:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
     restart: always
-    network_mode: "host"
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
     networks:
       - reseau-apps-test
 
