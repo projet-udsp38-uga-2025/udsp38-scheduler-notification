@@ -2,7 +2,6 @@ services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
-    env_file: .env
     dns:
       - 8.8.8.8
       - 8.8.4.4
