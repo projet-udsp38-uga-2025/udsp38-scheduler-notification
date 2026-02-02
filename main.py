@@ -10,8 +10,8 @@ from app.core.scheduler import scheduler
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    scheduler.start()
     force_ipv4()
+    scheduler.start()
     init_firebase()
     yield
     scheduler.shutdown()

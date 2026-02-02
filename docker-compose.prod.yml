@@ -2,6 +2,9 @@ services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:latest
     container_name: udsp38-scheduler-ms-prod
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
