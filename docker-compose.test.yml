@@ -7,8 +7,11 @@ services:
       - 8.8.4.4
     restart: always
     networks:
+      - bridge
       - reseau-apps-test
-
+      
 networks:
+  bridge:
+    driver: bridge
   reseau-apps-test:
     external: true
