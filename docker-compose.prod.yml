@@ -8,11 +8,3 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
-    networks:
-      - reseau-apps-prod
-
-networks:
-  reseau-apps-prod:
-    driver: bridge
-    driver_opts:
-      com.docker.network.driver.mtu: 1450
