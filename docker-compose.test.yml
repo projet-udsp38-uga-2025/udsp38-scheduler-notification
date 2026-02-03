@@ -2,7 +2,4 @@ services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
-    ports:
-      - "8000:8000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    network_mode: "host"
