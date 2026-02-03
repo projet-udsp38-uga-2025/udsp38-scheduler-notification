@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python3.13-alpine
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
 WORKDIR /app
 
@@ -15,11 +15,13 @@ ENV PYTHONUNBUFFERED=1
 # Activer la compilation bytecode python
 ENV UV_COMPILE_BYTECODE=1
 
+RUN echo "precedence ::ffff:0:0/96 100" >> /etc/gai.conf
+
 # Exclure les dépendances de développement
 ENV UV_NO_DEV=1
 
 # Installation des dépendances système si nécessaire (ex: pour psycopg2)
-RUN apk add --no-cache libpq
+RUN apt-get update && apt-get install -y --no-install-recommends libpq5 && rm -rf /var/lib/apt/lists/*
 
 COPY pyproject.toml uv.lock ./
 
