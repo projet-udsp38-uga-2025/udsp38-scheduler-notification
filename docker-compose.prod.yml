@@ -4,7 +4,7 @@ services:
     container_name: udsp38-scheduler-ms-prod
     restart: always
     ports:
-      - "8001:8000"
+      - "8000:8000"
     networks:
       - reseau-apps-test
 
