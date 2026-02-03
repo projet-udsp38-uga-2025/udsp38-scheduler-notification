@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - reseau-apps-test
+      - reseau-apps-prod
 
 networks:
-  reseau-apps-test:
+  reseau-apps-prod:
