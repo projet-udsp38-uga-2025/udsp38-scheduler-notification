@@ -3,6 +3,8 @@ services:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
     restart: always
+    ports:
+      - 8000:8000
     dns:
         - 8.8.8.8
         - 1.1.1.1
