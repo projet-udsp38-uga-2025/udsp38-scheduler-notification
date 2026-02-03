@@ -4,6 +4,3 @@ services:
     container_name: udsp38-scheduler-ms-test
     restart: always
     network_mode: host
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - NEXTJS_BASE_URL=${NEXTJS_BASE_URL}
