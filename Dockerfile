@@ -15,6 +15,8 @@ ENV PYTHONUNBUFFERED=1
 # Activer la compilation bytecode python
 ENV UV_COMPILE_BYTECODE=1
 
+RUN echo "precedence ::ffff:0:0/96 100" >> /etc/gai.conf
+
 # Exclure les dépendances de développement
 ENV UV_NO_DEV=1
 
