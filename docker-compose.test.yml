@@ -2,18 +2,7 @@ services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
-    restart: always
-    networks:
-      - bridge
-      - reseau-apps-test
-      
-networks:
-  bridge:
-    driver: bridge
-  reseau-apps-test:
-    driver: bridge
-    driver_opts:
-      com.docker.network.driver.mtu: 1450
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
