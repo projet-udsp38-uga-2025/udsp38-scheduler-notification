@@ -2,4 +2,11 @@ services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:latest
     container_name: udsp38-scheduler-ms-prod
-    network_mode: "host"
+    restart: always
+    ports:
+      - "8001:8000"
+    networks:
+      - reseau-apps-test
+
+networks:
+  reseau-apps-test:
