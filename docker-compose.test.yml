@@ -7,5 +7,6 @@ services:
       - "8000:8000"
     networks:
       - reseau-apps-test
-  networks:
-    reseau-apps-test:
+
+networks:
+  reseau-apps-test:
