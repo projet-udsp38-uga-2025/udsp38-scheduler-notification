@@ -3,8 +3,8 @@ services:
     image: projetudsp38/udsp38-scheduler-microservice:test
     container_name: udsp38-scheduler-ms-test
     restart: always
-    env_file:
-      - .env.test
+    volumes:
+      - /opt/udsp38-app/scheduler-microservice/.env.test:/app/.env
     ports:
       - "8001:8000"
     networks:
