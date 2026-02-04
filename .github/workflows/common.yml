@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
           source: "docker-compose.${{inputs.environnement}}.yml"
-          target: "/opt/udsp38-app/scheduler-microservice/"
+          target: "/home/${{ secrets.SSH_USER }}/app/udsp38-scheduler/"
           strip_components: 0
 
 
@@ -84,7 +84,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
           script: |
-            cd /opt/udsp38-app/scheduler-microservice
+            cd /home/${{ secrets.SSH_USER }}/app/udsp38-scheduler
             PROJECT_NAME=udsp38_scheduler_${{ inputs.docker_tag }}
             docker stop udsp38-scheduler-ms-${{ inputs.environnement }} || true
             docker rm udsp38-scheduler-ms-${{ inputs.environnement }} || true
