@@ -1,0 +1,17 @@
+services:
+  scheduler-app:
+    image: projetudsp38/udsp38-scheduler-microservice:test
+    container_name: udsp38-scheduler-ms-test
+    restart: always
+    env_file:
+      - .env.test
+    ports:
+      - "8001:8000"
+    networks:
+      - reseau-apps-test
+
+networks:
+  reseau-apps-test:
+    name: reseau-apps-test
+    driver: bridge
+    external: true

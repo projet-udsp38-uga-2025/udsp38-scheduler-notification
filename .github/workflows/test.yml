@@ -1,0 +1,16 @@
+name: Test CI/CD Pipeline
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  deploy-develop:
+    uses: ./.github/workflows/common.yml
+    with:
+      docker_tag: 'test'
+      environnement: 'test'
+      nextjs_base_url: 'NEXTJS_BASE_URL_TEST'
+    secrets: inherit

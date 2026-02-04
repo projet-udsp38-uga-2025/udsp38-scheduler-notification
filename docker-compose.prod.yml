@@ -1,0 +1,17 @@
+services:
+  scheduler-app:
+    image: projetudsp38/udsp38-scheduler-microservice:latest
+    container_name: udsp38-scheduler-ms-prod
+    restart: always
+    env_file:
+      - .env.prod
+    ports:
+      - "8000:8000"
+    networks:
+      - reseau-apps-prod
+
+networks:
+  reseau-apps-prod:
+    name: reseau-apps-prod
+    driver: bridge
+    external: true
