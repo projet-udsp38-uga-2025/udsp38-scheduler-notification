@@ -58,9 +58,6 @@ jobs:
           context: .
           push: true
           tags: projetudsp38/udsp38-scheduler-microservice:${{ inputs.docker_tag }}
-          build-args: |
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            NEXTJS_BASE_URL=${{ secrets[inputs.nextjs_base_url] }}
 
 
   deploy:
