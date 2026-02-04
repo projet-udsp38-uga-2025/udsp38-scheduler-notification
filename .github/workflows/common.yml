@@ -90,4 +90,3 @@ jobs:
             docker rm udsp38-scheduler-ms-${{inputs.docker_tag}} || true
             docker rmi projetudsp38/udsp38-scheduler-microservice:${{inputs.docker_tag}} || true
             docker compose -p ${PROJECT_NAME} -f docker-compose.${{inputs.environnement}}.yml up -d
-            docker image prune -f
