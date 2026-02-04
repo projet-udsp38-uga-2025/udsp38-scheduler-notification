@@ -1,9 +1,15 @@
 services:
   scheduler-app:
     image: projetudsp38/udsp38-scheduler-microservice:latest
-    container_name: udsp38-scheduler-ms-latest
-    ports:
-      - "3005:3005"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    container_name: udsp38-scheduler-ms-prod
     restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - reseau-apps-prod
+
+networks:
+  reseau-apps-prod:
+    name: reseau-apps-prod
+    driver: bridge
+    external: true

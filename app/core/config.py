@@ -9,3 +9,5 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+TIMEZONE: str = "Europe/Paris"
+FIREBASE_MAIN_TOPIC = "news"

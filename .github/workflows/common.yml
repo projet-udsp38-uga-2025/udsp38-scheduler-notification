@@ -48,6 +48,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Creer le fichier de configuration firebase
+        run: echo '${{ secrets.FIREBASE_CONFIG_JSON }}' > ./firebase-adminsdk.json
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -86,4 +89,9 @@ jobs:
           script: |
             cd /home/${{ secrets.SSH_USER }}/app/udsp38-scheduler
             docker compose -f docker-compose.${{inputs.environnement}}.yml up -d
+            PROJECT_NAME=udsp38_scheduler_${DOCKER_TAG}
+            docker stop udsp38-scheduler-ms-${{inputs.docker_tag}} || true
+            docker rm udsp38-scheduler-ms-${{inputs.docker_tag}} || true
+            docker rmi projetudsp38/udsp38-scheduler-microservice:${{inputs.docker_tag}} || true
+            docker compose -p ${PROJECT_NAME} -f docker-compose.${{inputs.environnement}}.yml up -d
             docker image prune -f
