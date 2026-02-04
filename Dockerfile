@@ -2,12 +2,6 @@ FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
 WORKDIR /app
 
-ARG DATABASE_URL
-ARG NEXTJS_BASE_URL
-
-ENV DATABASE_URL=$DATABASE_URL
-ENV NEXTJS_BASE_URL=$NEXTJS_BASE_URL
-
 # Empêcher Python de générer des fichiers .pyc et forcer l'affichage des logs
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
