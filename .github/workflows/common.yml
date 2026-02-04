@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
           source: "docker-compose.${{inputs.environnement}}.yml"
-          target: "/home/${{ secrets.SSH_USER }}/app/udsp38-scheduler/"
+          target: "/opt/udsp38-app/scheduler-microservice/"
           strip_components: 0
 
 
@@ -84,9 +84,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SCHEDULER }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/app/udsp38-scheduler
-            PROJECT_NAME=udsp38_scheduler_${DOCKER_TAG}
-            docker stop udsp38-scheduler-ms-${{inputs.docker_tag}} || true
-            docker rm udsp38-scheduler-ms-${{inputs.docker_tag}} || true
-            docker rmi projetudsp38/udsp38-scheduler-microservice:${{inputs.docker_tag}} || true
-            docker compose -p ${PROJECT_NAME} -f docker-compose.${{inputs.environnement}}.yml up -d
+            cd /opt/udsp38-app/scheduler-microservice
+            PROJECT_NAME=udsp38_scheduler_${{ inputs.docker_tag }}
+            docker stop udsp38-scheduler-ms-${{ inputs.environnement }} || true
+            docker rm udsp38-scheduler-ms-${{ inputs.environnement }} || true
+            docker rmi projetudsp38/udsp38-scheduler-microservice:${{ inputs.docker_tag }} || true
+            docker compose -p ${PROJECT_NAME} -f docker-compose.${{ inputs.environnement }}.yml up -d
+            docker image prune -f
