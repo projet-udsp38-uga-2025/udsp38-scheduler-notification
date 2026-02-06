@@ -1,3 +1,4 @@
+from venv import logger
 from fastapi import APIRouter
 
 from app.dtos.requests.archiver_publication_dto import ProgrammerArchivageRequestDTO
