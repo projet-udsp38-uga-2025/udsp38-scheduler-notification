@@ -4,7 +4,9 @@ from apscheduler.triggers.date import DateTrigger
 from app.core.config import TIMEZONE
 from app.core.logger import logger
 from app.core.scheduler import scheduler
+from app.dtos.requests.archiver_publication_dto import ProgrammerArchivageRequestDTO
 from app.dtos.requests.programmer_publication_dto import ProgrammerPublicationRequestDTO
+from app.dtos.requests.supprimer_job_dto import SupprimerJobRequestDTO
 from app.dtos.responses.job_programmation_dto import JobProgrammationDTO
 from app.services.http_service import archiver, publier
 
@@ -12,10 +14,7 @@ from app.services.http_service import archiver, publier
 def programmer_publication(
     payload: ProgrammerPublicationRequestDTO,
 ) -> JobProgrammationDTO:
-    logger.info(
-        f"[Scheduler] Programmation d'une publication (ID: {payload.publication_id}, "
-        f"Type: {payload.type_publication}) pour le {payload.date_publication}"
-    )
+    job_id = f"publish_{payload.type_publication.name}_{payload.publication_id}"
 
     try:
         trigger = DateTrigger(run_date=payload.date_publication, timezone=TIMEZONE)
@@ -23,11 +22,13 @@ def programmer_publication(
             func=publier,
             trigger=trigger,
             args=[payload.publication_id, payload.type_publication],
+            id=job_id,
             replace_existing=True,
+            misfire_grace_time=3600,
         )
 
         logger.info(
-            f"[Scheduler] Job de publication créé avec succès (Job ID: {job_publication.id})"
+            f"[Scheduler] Publication programmée pour {job_id} à {trigger.run_date} (Timezone: {TIMEZONE})"
         )
 
         if payload.date_expiration is not None:
@@ -44,23 +45,54 @@ def programmer_publication(
         )
         raise
 
+def supprimer_job(supprimer_job_request: SupprimerJobRequestDTO) -> None:
+    try:
+        publish_job_id = f"publish_{supprimer_job_request.type_publication.name}_{supprimer_job_request.publication_id}"
+        archive_job_id = f"archive_{supprimer_job_request.type_publication.name}_{supprimer_job_request.publication_id}"
+        if scheduler.get_job(publish_job_id):
+            scheduler.remove_job(publish_job_id)
+        if scheduler.get_job(archive_job_id):
+            scheduler.remove_job(archive_job_id)
+    except Exception as e:
+        logger.error(
+            f"[Scheduler] Erreur lors de la suppression du job {supprimer_job_request.publication_id}: {e}",
+            exc_info=True,
+        )
+        raise
 
-def archiver_publication(payload: ProgrammerPublicationRequestDTO) -> None:
-    logger.info(
-        f"[Scheduler] Planification de l'archivage pour {payload.publication_id} au {payload.date_expiration}"
-    )
+def archiver_publication(
+    payload: ProgrammerPublicationRequestDTO | ProgrammerArchivageRequestDTO,
+) -> JobProgrammationDTO:
+    if not payload.date_expiration:
+        raise ValueError("Date expiration est requise pour l'archivage")
+
+    job_id = f"archive_{payload.type_publication.name}_{payload.publication_id}"
+
     try:
         trigger = DateTrigger(run_date=payload.date_expiration, timezone=TIMEZONE)
-        job_archive: Job = scheduler.add_job(
+        job = scheduler.add_job(
             func=archiver,
             trigger=trigger,
             args=[payload.publication_id, payload.type_publication],
+            id=job_id,
             replace_existing=True,
+            misfire_grace_time=3600,
         )
-        logger.info(f"[Scheduler] Job d'archivage créé (Job ID: {job_archive.id})")
+
+        logger.info(
+            f"[Scheduler] Archivage programmé pour {job_id} à {trigger.run_date} (Timezone: {TIMEZONE})"
+        )
+
+        return JobProgrammationDTO(
+            job_id=job.id,
+            date_programmation=payload.date_expiration.isoformat(),
+        )
 
     except Exception as e:
         logger.error(
             f"[Scheduler] Erreur lors de la planification de l'archivage pour {payload.publication_id}: {e}",
             exc_info=True,
         )
+        raise
+
+
