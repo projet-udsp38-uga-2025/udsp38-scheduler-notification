@@ -33,8 +33,6 @@ def archiver(publication_id: int, type_publication: TypePublication):
     )
     url = f"{settings.NEXTJS_BASE_URL}/api/{ressource}/{publication_id}/archiver"
 
-    logger.info(f"[JOB EXEC] Début d'archivage : {ressource} ID {publication_id}")
-
     try:
         response = requests.post(url, timeout=10)
         response.raise_for_status()
