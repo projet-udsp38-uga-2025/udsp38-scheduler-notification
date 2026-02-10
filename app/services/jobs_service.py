@@ -8,7 +8,7 @@ from app.dtos.requests.archiver_publication_dto import ProgrammerArchivageReques
 from app.dtos.requests.programmer_publication_dto import ProgrammerPublicationRequestDTO
 from app.dtos.requests.supprimer_job_dto import SupprimerJobRequestDTO
 from app.dtos.responses.job_programmation_dto import JobProgrammationDTO
-from app.services.http_service import archiver, publier
+from app.services.http_service import http_service
 
 
 def programmer_publication(
@@ -19,7 +19,7 @@ def programmer_publication(
     try:
         trigger = DateTrigger(run_date=payload.date_publication, timezone=TIMEZONE)
         job_publication: Job = scheduler.add_job(
-            func=publier,
+            func=http_service.publier,
             trigger=trigger,
             args=[payload.publication_id, payload.type_publication],
             id=job_id,
@@ -45,6 +45,7 @@ def programmer_publication(
         )
         raise
 
+
 def supprimer_job(supprimer_job_request: SupprimerJobRequestDTO) -> None:
     try:
         publish_job_id = f"publish_{supprimer_job_request.type_publication.name}_{supprimer_job_request.publication_id}"
@@ -60,6 +61,7 @@ def supprimer_job(supprimer_job_request: SupprimerJobRequestDTO) -> None:
         )
         raise
 
+
 def archiver_publication(
     payload: ProgrammerPublicationRequestDTO | ProgrammerArchivageRequestDTO,
 ) -> JobProgrammationDTO:
@@ -71,7 +73,7 @@ def archiver_publication(
     try:
         trigger = DateTrigger(run_date=payload.date_expiration, timezone=TIMEZONE)
         job = scheduler.add_job(
-            func=archiver,
+            func=http_service.archiver,
             trigger=trigger,
             args=[payload.publication_id, payload.type_publication],
             id=job_id,
@@ -94,5 +96,3 @@ def archiver_publication(
             exc_info=True,
         )
         raise
-
-
